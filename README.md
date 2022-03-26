@@ -29,3 +29,10 @@ chmod +x git-to-fossil
 # move script to somewhere in "$PATH" such as:
 mv git-to-fossil /usr/local/bin/
 ```
+
+## Configuration
+
+Fossil determines the user for the newly created repository from the
+`$USER` environment variable. In this script, `$GIT_USER` is used with
+a fallback to `$USER`. If neither variable is set, then the output of
+the `whoami` command is used.
