@@ -24,7 +24,7 @@ exists, then an incremental import is performed.
 curl -O https://git.sr.ht/~rasch/git-to-fossil/blob/main/git-to-fossil
 
 # make it executable
-chmod +x mkrepo
+chmod +x git-to-fossil
 
 # move script to somewhere in "$PATH" such as:
 mv git-to-fossil /usr/local/bin/
