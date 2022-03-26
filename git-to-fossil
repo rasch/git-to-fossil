@@ -1,0 +1,26 @@
+#!/bin/sh
+
+dirname=$(basename "$(pwd)")
+
+# exit if not in a Git repository
+if ! test -d ".git"; then
+  echo "ERROR: '$dirname' is not a git repository"
+  exit 1
+fi
+
+# use the current directory to name to Fossil repository
+fossil_repo="../_fossil/$dirname.fossil"
+
+# create Fossil directory if it doesn't exist
+mkdir -p ../_fossil
+
+# Fossil requires USER to be set: $GIT_USER -> $USER -> $(whoami)
+username="${USER:-$(whoami)}"
+export USER="${GIT_USER:-$username}"
+
+# if the Fossil repository already exists, then do an incremental import
+if test -f "$fossil_repo"; then
+  git fast-export --all | fossil import --git --incremental "$fossil_repo"
+else
+  git fast-export --all | fossil import --git "$fossil_repo"
+fi
