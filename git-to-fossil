@@ -19,8 +19,7 @@ username="${USER:-$(whoami)}"
 export USER="${GIT_USER:-$username}"
 
 # if the Fossil repository already exists, then do an incremental import
-if test -f "$fossil_repo"; then
-  git fast-export --all | fossil import --git --incremental "$fossil_repo"
-else
-  git fast-export --all | fossil import --git "$fossil_repo"
-fi
+test -f "$fossil_repo" && incremental=true
+
+git fast-export --all | \
+  fossil import --git ${incremental:+--incremental} "$fossil_repo"
